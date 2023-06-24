@@ -18,19 +18,19 @@ package tuc.isse;
 public  class Main {
 
     public static void main(String[] args) throws ColumnFullException {
-        Bord bord = new Bord();
-        bord.dropToken(Color.RED, 6);
-        bord.dropToken(Color.RED, 6);
-        bord.dropToken(Color.RED, 6);
-        bord.dropToken(Color.YELLOW, 6);
-        bord.dropToken(Color.YELLOW, 5);
-        bord.dropToken(Color.RED, 5);
-        bord.dropToken(Color.YELLOW, 4);
-        bord.dropToken(Color.YELLOW, 4);
-        bord.dropToken(Color.RED, 4);
-        bord.dropToken(Color.YELLOW, 3);
-        bord.dropToken(Color.YELLOW, 2);
-        bord.dropToken(Color.RED, 2);
+        Bord board = new Bord();
+        board.dropToken(Color.RED, 6);
+        board.dropToken(Color.RED, 6);
+        board.dropToken(Color.RED, 6);
+        board.dropToken(Color.YELLOW, 6);
+        board.dropToken(Color.YELLOW, 5);
+        board.dropToken(Color.RED, 5);
+        board.dropToken(Color.YELLOW, 4);
+        board.dropToken(Color.YELLOW, 4);
+        board.dropToken(Color.RED, 4);
+        board.dropToken(Color.YELLOW, 3);
+        board.dropToken(Color.YELLOW, 2);
+        //board.dropToken(Color.RED, 2);
 
     }
 }
