@@ -15,49 +15,83 @@ package tuc.isse;
  * @author Uriel Delmas Teponou Wamba und Kailas Sargar
  * diese Klasse dient als Brett, auf dem das gesamte Spiel stattfinden wird
  */
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 public class Bord extends GameObjekt {
+    Stack<Token> lager_red = new Stack<Token>();
+    Stack<Token> lager_yellow = new Stack<Token>();
     public Bord() {
-        this.cells = new Cell[6][7];
-        for (int i = 0; i < cells.length; i++){
-            for(int j = 0; j < cells[i].length; j++){
-                cells[i][j] = new Cell();
+        this.cells = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            List<Cell> row = new ArrayList<>();
+            for (int j = 0; j < 7; j++) {
+                row.add(new Cell());
             }
+            this.cells.add(row);
+        }
+        for(int i = 0; i < 21; i++){
+            this.lager_red.push(new Token(Color.RED));
+            this.lager_yellow.push(new Token(Color.YELLOW));
         }
     }
-    private final Cell[][] cells;
-    public void dropToken(Color color, int columnIndex) throws ColumnFullException {
-        if(testVictory()!= Winner.NONE){
-            return;
+
+    private final List<List<Cell>> cells;
+
+    public Token getToken(Color color){
+        if(color == Color.RED) {
+            if(hasToken(color))return  lager_red.pop();
         }
+        else {
+            if(hasToken(color))return lager_yellow.pop();
+        }
+        return null;
+    }
+    public boolean hasToken(Color color){
+        if(color == Color.RED){
+            return !lager_red.empty();
+        }
+        else {
+            return !lager_yellow.empty();
+        }
+    }
+
+    private boolean isTie() {
+        int count = 0;
+        for (List<Cell> cell : cells) {
+            for (Cell value : cell) {
+                if (value.getToken() != null) count += 1;
+            }
+        }
+        return count == 42;
+    }
+
+    public void dropToken(Token token, int columnIndex) throws ColumnFullException, IllegalMoveException {
+        if (testVictory() != Winner.NONE) throw new IllegalMoveException("Das Spiel ist fertig");
+        if (columnIndex < 0 || columnIndex >= cells.get(0).size()) throw new IllegalArgumentException("Ungültiger Spaltenindex");
         int i = 0;
-        while( i < cells.length ){
-            boolean b = canDrop(columnIndex);
-            if (b) {
-                if(cells[i][columnIndex].getToken() == null){
-                    cells[i][columnIndex].setToken(new Token(color));
+        while (i < cells.size()) {
+            if (canDrop(columnIndex)) {
+                if (cells.get(i).get(columnIndex).getToken() == null) {
+                    cells.get(i).get(columnIndex).setToken(token);
                     System.out.println(toString());
-                    if(testVictory()!= Winner.NONE){
-                        return;
-                    }
+                    if (testVictory() != Winner.NONE) break;
                     break;
-                }
-                else{
+                } else {
                     i++;
                 }
+            } else {
+                throw new ColumnFullException("Die Spalte ist voll");
             }
-            else throw new ColumnFullException("Die Spalte ist voll");
         }
     }
+
     private boolean canDrop(int columnIndex) {
-        int i = 0;
-        if (columnIndex >= 0 && columnIndex <= 7) {
-            while (i < cells.length){
-                if(cells[i][columnIndex].getToken() == null){
+        if (columnIndex >= 0 && columnIndex < cells.get(0).size()) {
+            for (List<Cell> row : cells) {
+                if (row.get(columnIndex).getToken() == null) {
                     return true;
-                }
-                else {
-                    i++;
                 }
             }
         }
@@ -65,7 +99,7 @@ public class Bord extends GameObjekt {
     }
 
     private boolean isRowVictory(Color color) {
-        for (Cell[] cell : cells) {
+        for (List<Cell> cell : cells) {
             int count = 0;
             for (Cell value : cell) {
                 if (value.getToken() != null && value.getToken().getColor() == color) {
@@ -82,10 +116,10 @@ public class Bord extends GameObjekt {
     }
 
     private boolean isColumnVictory(Color color) {
-        for (int col = 0; col < cells[0].length; col++) {
+        for (int col = 0; col < cells.get(0).size(); col++) {
             int count = 0;
-            for (Cell[] cell : cells) {
-                if (cell[col].getToken() != null && cell[col].getToken().getColor() == color) {
+            for (List<Cell> cell : cells) {
+                if (cell.get(col).getToken() != null && cell.get(col).getToken().getColor() == color) {
                     count++;
                     if (count == 4) {
                         return true;
@@ -100,13 +134,13 @@ public class Bord extends GameObjekt {
 
     private boolean isDiagonalVictory(Color color){
 
-        for (int n = 0; n < cells.length; n++){
+        for (int n = 0; n < cells.size(); n++){
             int i = n;
             int j = 0;
             int counter = 0;
-            while (i < cells.length && j < cells[1].length){
-                if(cells[i][j].getToken() != null){
-                    if(cells[i][j].getToken().getColor() == color ){
+            while (i < cells.size() && j < cells.get(1).size()){
+                if(cells.get(i).get(j).getToken() != null){
+                    if(cells.get(i).get(j).getToken().getColor() == color ){
                         counter += 1;
                     }
                     else {
@@ -121,13 +155,13 @@ public class Bord extends GameObjekt {
             }
         }
 
-        for (int n = 0; n < cells[1].length; n++){
+        for (int n = 0; n < cells.get(1).size(); n++){
             int i = 0;
             int j = n;
             int counter = 0;
-            while (i < cells.length && j < cells[1].length){
-                if(cells[i][j].getToken() != null){
-                    if(cells[i][j].getToken().getColor() == color ){
+            while (i < cells.size() && j < cells.get(1).size()){
+                if(cells.get(i).get(j).getToken() != null){
+                    if(cells.get(i).get(j).getToken().getColor() == color ){
                         counter += 1;
                     }
                     else {
@@ -142,13 +176,13 @@ public class Bord extends GameObjekt {
             }
         }
 
-        for (int n = 0; n < cells.length; n++){
+        for (int n = 0; n < cells.size(); n++){
             int i = n;
-            int j =cells[1].length - 1;
+            int j = cells.get(1).size() - 1;
             int counter = 0;
-            while (i < cells.length && j >= 0){
-                if(cells[i][j].getToken() != null){
-                    if(cells[i][j].getToken().getColor() == color ){
+            while (i < cells.size() && j >= 0){
+                if(cells.get(i).get(j).getToken() != null){
+                    if(cells.get(i).get(j).getToken().getColor() == color ){
                         counter += 1;
                     }
                     else {
@@ -164,13 +198,13 @@ public class Bord extends GameObjekt {
         }
 
 
-        for (int n = cells[1].length - 1; n >= 0; n--){
+        for (int n = cells.get(1).size() - 1; n >= 0; n--){
             int i = 0;
             int j = n;
             int counter = 0;
-            while (i < cells.length && j >= 0){
-                if(cells[i][j].getToken() != null){
-                    if(cells[i][j].getToken().getColor() == color ){
+            while (i < cells.size() && j >= 0){
+                if(cells.get(i).get(j).getToken() != null){
+                    if(cells.get(i).get(j).getToken().getColor() == color ){
                         counter += 1;
                     }
                     else {
@@ -192,20 +226,25 @@ public class Bord extends GameObjekt {
         if(isRowVictory(Color.RED) || isColumnVictory(Color.RED) || isDiagonalVictory(Color.RED)){
             System.out.println("Der Spieler mit der Farbe Rot hat gewonnen");
             return Winner.RED;
-
-
-        } else if (isRowVictory(Color.YELLOW) || isColumnVictory(Color.YELLOW) || isDiagonalVictory(Color.YELLOW)) {
+        }
+        else if (isRowVictory(Color.YELLOW) || isColumnVictory(Color.YELLOW) || isDiagonalVictory(Color.YELLOW)) {
             System.out.println("Der Spieler mit der Farbe Gelb hat gewonnen");
             return Winner.YELLOW;
         }
+        else if(isTie())  {
+            System.out.println("Niemand hat gewonnen : Das Spiel ist fertig");
+            return Winner.TIE;
+        }
         return Winner.NONE;
     }
+
+
     @Override
     public String toString() {
         StringBuilder brett = new StringBuilder();
-        for (int i = cells.length -1; i >= 0; i--) {
-            for (int j = 0; j < cells[i].length; j++) {
-                brett.append(cells[i][j].toString()).append(" ");
+        for (int i = cells.size() - 1; i >= 0; i--) {
+            for (int j = 0; j < cells.get(i).size(); j++) {
+                brett.append(cells.get(i).get(j).toString()).append(" ");
             }
             brett.append("\n");
         }

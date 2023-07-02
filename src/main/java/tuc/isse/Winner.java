@@ -16,5 +16,5 @@ package tuc.isse;
  * in dieses Enum findet man die Farbe der Gewinner des Spiels, wenn es einen gibt
  */
 public enum Winner {
-    RED, YELLOW, NONE
+    RED, YELLOW, NONE, TIE
 }

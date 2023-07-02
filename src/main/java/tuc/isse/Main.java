@@ -17,20 +17,20 @@ package tuc.isse;
  */
 public  class Main {
 
-    public static void main(String[] args) throws ColumnFullException {
+    public static void main(String[] args) throws ColumnFullException, IllegalMoveException {
         Bord board = new Bord();
-        board.dropToken(Color.RED, 6);
-        board.dropToken(Color.RED, 6);
-        board.dropToken(Color.RED, 6);
-        board.dropToken(Color.YELLOW, 6);
-        board.dropToken(Color.YELLOW, 5);
-        board.dropToken(Color.RED, 5);
-        board.dropToken(Color.YELLOW, 4);
-        board.dropToken(Color.YELLOW, 4);
-        board.dropToken(Color.RED, 4);
-        board.dropToken(Color.YELLOW, 3);
-        board.dropToken(Color.YELLOW, 2);
-        //board.dropToken(Color.RED, 2);
+        board.dropToken(board.getToken(Color.RED), 6);
+        board.dropToken(board.getToken(Color.RED), 6);
+        board.dropToken(board.getToken(Color.RED), 6);
+        board.dropToken(board.getToken(Color.YELLOW), 6);
+        board.dropToken(board.getToken(Color.YELLOW), 5);
+        board.dropToken(board.getToken(Color.RED), 5);
+        board.dropToken(board.getToken(Color.YELLOW), 4);
+        board.dropToken(board.getToken(Color.YELLOW), 4);
+        board.dropToken(board.getToken(Color.RED), 4);
+        board.dropToken(board.getToken(Color.YELLOW), 3);
+        board.dropToken(board.getToken(Color.YELLOW), 2);
+
 
     }
 }
