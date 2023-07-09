@@ -252,6 +252,7 @@ public class Bord extends GameObjekt {
     @Override
     public String toString() {
         StringBuilder brett = new StringBuilder();
+        brett.append("\n");
         for (int i = cells.size() - 1; i >= 0; i--) {
             for (int j = 0; j < cells.get(i).size(); j++) {
                 brett.append(cells.get(i).get(j).toString()).append(" ");
