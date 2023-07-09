@@ -76,7 +76,20 @@ public class Bord extends GameObjekt {
                 if (cells.get(i).get(columnIndex).getToken() == null) {
                     cells.get(i).get(columnIndex).setToken(token);
                     System.out.println(toString());
-                    if (testVictory() != Winner.NONE) break;
+                    if (testVictory() != Winner.NONE){
+                        if(testVictory() == Winner.RED){
+                            System.out.println("And the winner is: X");
+                            break;
+                        }
+                        else if(testVictory() == Winner.YELLOW){
+                            System.out.println("And the winner is: O");
+                            break;
+                        }
+                        else{
+                            System.out.println("Niemand hat gewonnen : Das Spiel ist fertig");
+                            break;
+                        }
+                    }
                     break;
                 } else {
                     i++;
@@ -224,15 +237,12 @@ public class Bord extends GameObjekt {
 
     public Winner testVictory(){
         if(isRowVictory(Color.RED) || isColumnVictory(Color.RED) || isDiagonalVictory(Color.RED)){
-            System.out.println("Der Spieler mit der Farbe Rot hat gewonnen");
             return Winner.RED;
         }
         else if (isRowVictory(Color.YELLOW) || isColumnVictory(Color.YELLOW) || isDiagonalVictory(Color.YELLOW)) {
-            System.out.println("Der Spieler mit der Farbe Gelb hat gewonnen");
             return Winner.YELLOW;
         }
         else if(isTie())  {
-            System.out.println("Niemand hat gewonnen : Das Spiel ist fertig");
             return Winner.TIE;
         }
         return Winner.NONE;
@@ -248,6 +258,7 @@ public class Bord extends GameObjekt {
             }
             brett.append("\n");
         }
+        brett.append("[0] [1] [2] [3] [4] [5] [6]\n");
         return brett.toString();
     }
 }
