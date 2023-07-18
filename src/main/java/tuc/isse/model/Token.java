@@ -10,7 +10,8 @@
  * Vorname: Kailas
  * Nachname: Sargar
  */
-package tuc.isse;
+package tuc.isse.model;
+
 /**
  * @author Uriel Delmas Teponou Wamba und Kailas Sargar
  * diese Klasse gestaltet alle einzelnen Chips, die ins Spiel vorkommen werden

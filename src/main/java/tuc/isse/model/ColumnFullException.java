@@ -10,11 +10,14 @@
  * Vorname: Kailas
  * Nachname: Sargar
  */
-package tuc.isse;
+package tuc.isse.model;
 /**
  * @author Uriel Delmas Teponou Wamba und Kailas Sargar
- * in dieses Enum findet man die Farbe der Gewinner des Spiels, wenn es einen gibt
+ * diese Klasse gestaltet die Ausnahme, die auftritt, wenn eine Spalte des Bretts voll ist
  */
-public enum Winner {
-    RED, YELLOW, NONE, TIE
+public class ColumnFullException extends Exception {
+
+    public ColumnFullException(String arrayIsVoll) {
+        super(arrayIsVoll);
+    }
 }

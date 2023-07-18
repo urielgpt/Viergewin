@@ -15,10 +15,17 @@ package tuc.isse;
  * @author Uriel Delmas Teponou Wamba und Kailas Sargar
  * In diese Klasse kann man das Spiel ausführen
  */
+import tuc.isse.controller.ConsoleGame;
+import tuc.isse.controller.ConsolePlayer;
+import tuc.isse.model.Bord;
+import tuc.isse.model.Color;
+import tuc.isse.model.ColumnFullException;
+import tuc.isse.model.IllegalMoveException;
+
 import java.io.IOException;
 
 public class GameMain_Console {
-    public static void main(String[] args) throws ColumnFullException, IllegalMoveException, IOException {
+    public static void main(String[] args) throws IllegalMoveException, IOException {
         Bord bord = new Bord();
         ConsoleGame consoleGame = new ConsoleGame(bord);
         ConsolePlayer player_1 = new ConsolePlayer(Color.RED, bord);

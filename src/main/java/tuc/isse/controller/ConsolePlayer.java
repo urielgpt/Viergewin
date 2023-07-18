@@ -10,16 +10,21 @@
  * Vorname: Kailas
  * Nachname: Sargar
  */
-package tuc.isse;
+package tuc.isse.controller;
 /**
  * @author Uriel Delmas Teponou Wamba und Kailas Sargar
  * die Klasse implementiert eine interaktive doTurn-Methode.
  */
+import tuc.isse.model.Bord;
+import tuc.isse.model.Color;
+import tuc.isse.model.ColumnFullException;
+import tuc.isse.model.IllegalMoveException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class ConsolePlayer extends Player{
+public class ConsolePlayer extends Player {
     public ConsolePlayer(Color color, Bord bord) {
         super(color, bord);
     }

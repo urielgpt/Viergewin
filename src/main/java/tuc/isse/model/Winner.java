@@ -10,11 +10,11 @@
  * Vorname: Kailas
  * Nachname: Sargar
  */
-package tuc.isse;
+package tuc.isse.model;
 /**
  * @author Uriel Delmas Teponou Wamba und Kailas Sargar
- * in diesem Enum haben wir alle Farbe, die ins Spiel vorkommen können
+ * in dieses Enum findet man die Farbe der Gewinner des Spiels, wenn es einen gibt
  */
-public enum Color {
-    RED, YELLOW
+public enum Winner {
+    RED, YELLOW, NONE, TIE
 }

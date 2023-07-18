@@ -18,10 +18,16 @@ package tuc.isse;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import tuc.isse.model.Bord;
+import tuc.isse.model.Color;
+import tuc.isse.model.ColumnFullException;
+import tuc.isse.model.IllegalMoveException;
+
+import java.io.IOException;
 
 class BoardTest {
     @Test
-    public void Board_1() throws ColumnFullException, IllegalMoveException {
+    public void Board_1() throws ColumnFullException, IllegalMoveException, IOException {
         Bord board_1 = new Bord();
         board_1.dropToken(board_1.getToken(Color.RED), 6);
         board_1.dropToken(board_1.getToken(Color.RED), 6);
@@ -46,7 +52,7 @@ class BoardTest {
                         """, board_1.toString());
     }
     @Test
-    public void Board_2() throws ColumnFullException, IllegalMoveException {
+    public void Board_2() throws ColumnFullException, IllegalMoveException, IOException {
         Bord board_2 = new Bord();
         board_2.dropToken(board_2.getToken(Color.YELLOW), 6);
         board_2.dropToken(board_2.getToken(Color.YELLOW), 6);
@@ -74,7 +80,7 @@ class BoardTest {
                         """, board_2.toString());
     }
     @Test
-    public void Board_3() throws ColumnFullException, IllegalMoveException {
+    public void Board_3() throws ColumnFullException, IllegalMoveException, IOException {
         Bord board_3 = new Bord();
         board_3.dropToken(board_3.getToken(Color.RED), 6);
         board_3.dropToken(board_3.getToken(Color.RED), 6);
@@ -101,7 +107,7 @@ class BoardTest {
                         """, board_3.toString());
     }
     @Test
-    public void Board_4() throws ColumnFullException, IllegalMoveException {
+    public void Board_4() throws ColumnFullException, IllegalMoveException, IOException {
         Bord board_4 = new Bord();
         board_4.dropToken(board_4.getToken(Color.RED), 6);
         board_4.dropToken(board_4.getToken(Color.RED), 6);
@@ -128,7 +134,7 @@ class BoardTest {
     }
 
     @Test
-    public void Board_5() throws ColumnFullException, IllegalMoveException {
+    public void Board_5() throws ColumnFullException, IllegalMoveException, IOException {
         Bord board_5 = new Bord();
         board_5.dropToken(board_5.getToken(Color.RED), 6);
         board_5.dropToken(board_5.getToken(Color.YELLOW), 6);

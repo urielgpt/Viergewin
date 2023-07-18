@@ -10,11 +10,13 @@
  * Vorname: Kailas
  * Nachname: Sargar
  */
-package tuc.isse;
+package tuc.isse.model;
 /**
  * @author Uriel Delmas Teponou Wamba und Kailas Sargar
  * diese Klasse dient als Brett, auf dem das gesamte Spiel stattfinden wird
  */
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -48,6 +50,10 @@ public class Bord extends GameObjekt {
         }
         return null;
     }
+    public Color getTokenColor(int row, int column){
+        if (cells.get(row).get(column).getToken() != null) return cells.get(row).get(column).getToken().getColor();
+        else return null;
+    }
     public boolean hasToken(Color color){
         if(color == Color.RED){
             return !lager_red.empty();
@@ -67,7 +73,7 @@ public class Bord extends GameObjekt {
         return count == 42;
     }
 
-    public void dropToken(Token token, int columnIndex) throws ColumnFullException, IllegalMoveException {
+    public void dropToken(Token token, int columnIndex) throws ColumnFullException, IllegalMoveException, IOException {
         if (testVictory() != Winner.NONE) throw new IllegalMoveException("Das Spiel ist fertig");
         if (columnIndex < 0 || columnIndex >= cells.get(0).size()) throw new IllegalArgumentException("Ungültiger Spaltenindex");
         int i = 0;

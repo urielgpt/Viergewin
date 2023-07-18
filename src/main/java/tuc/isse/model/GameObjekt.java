@@ -10,14 +10,13 @@
  * Vorname: Kailas
  * Nachname: Sargar
  */
-package tuc.isse;
+package tuc.isse.model;
 /**
  * @author Uriel Delmas Teponou Wamba und Kailas Sargar
- * diese Klasse gestaltet die Ausnahme, die auftritt, wenn eine Spalte des Bretts voll ist
+ * diese Klasse ist die abstrakte OberKlasse aller anderer Klasse des Spiels
  */
-public class ColumnFullException extends Exception {
-
-    public ColumnFullException(String arrayIsVoll) {
-        super(arrayIsVoll);
-    }
+public abstract class GameObjekt {
+    public abstract String toString();
 }
+
+

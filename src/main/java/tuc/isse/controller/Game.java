@@ -10,12 +10,17 @@
  * Vorname: Kailas
  * Nachname: Sargar
  */
-package tuc.isse;
+package tuc.isse.controller;
 /**
  * @author Uriel Delmas Teponou Wamba und Kailas Sargar
  * die Klasse führt den eigentlichen Spielablauf durch. Die Klasse koordiniert die beiden Spieler koor-
  * und einen bestimmt einen Sieger.
  */
+import tuc.isse.controller.Player;
+import tuc.isse.model.Bord;
+import tuc.isse.model.ColumnFullException;
+import tuc.isse.model.IllegalMoveException;
+
 import java.io.IOException;
 
 public abstract class Game {

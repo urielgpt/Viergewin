@@ -10,14 +10,11 @@
  * Vorname: Kailas
  * Nachname: Sargar
  */
-package tuc.isse;
+package tuc.isse.model;
 /**
  * @author Uriel Delmas Teponou Wamba und Kailas Sargar
- * diese Klasse gestaltet die Ausnahme, die auftritt, wenn das ganze Brett voll ist
+ * in diesem Enum haben wir alle Farbe, die ins Spiel vorkommen können
  */
-public class IllegalMoveException extends Exception {
-    public IllegalMoveException(String arrayIsVoll) {
-        super(arrayIsVoll);
-    }
-
+public enum Color {
+    RED, YELLOW
 }
