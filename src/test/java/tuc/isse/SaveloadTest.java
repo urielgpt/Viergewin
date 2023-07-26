@@ -1,3 +1,15 @@
+///////////////////////////////////
+/*
+ * uriel.delmas.teponou.wamba@tu-clausthal.de
+ * Vorname: Uriel Delmas
+ * Nachname: Teponou Wamba
+ *
+ * Partner
+ *
+ * kailas.mahadev.sargar@tu-clausthal.de
+ * Vorname: Kailas
+ * Nachname: Sargar
+ */
 package tuc.isse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -5,7 +17,10 @@ import tuc.isse.model.Bord;
 import tuc.isse.model.Color;
 import tuc.isse.model.ColumnFullException;
 import tuc.isse.model.IllegalMoveException;
-
+/**
+ * @author Uriel Delmas Teponou Wamba und Kailas Sargar
+ * die Klasse dient als Test für die save-load Funktion
+ */
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
