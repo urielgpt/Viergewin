@@ -38,6 +38,12 @@ class MocGameTest implements BordObserver {
     public void update(ObservableBord bord) throws ColumnFullException, IllegalMoveException {
         Assertions.assertTrue(bord.getBordObservers().contains(this)); // Der Observer_mechanismus wird hier durch den Aufruf der Methode assertTrue getestet
     }
+
+    @Override
+    public void update_load(ObservableBord observableBord) {
+
+    }
+
     @Test
     public void  MocGame_Test_2() throws ColumnFullException, IllegalMoveException, IOException {
         ObservableBord bord1 = new ObservableBord();

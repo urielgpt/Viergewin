@@ -48,9 +48,9 @@ public class FrameGame extends Game implements BordObserver {
         vierGewinntFrame.update(bord);
         if (bord.testVictory() == Winner.NONE) {
 
-            if (this.dran == 1) ist_dran = player_x;
-            else ist_dran = player_o;
-            swapPlayer();
+            if (this.bord.lager_red.size() < this.bord.lager_yellow.size()){
+                ist_dran = player_o;
+            } else ist_dran = player_x;
             ist_dran.doTurn();
         } else {
             for (JButton buttons : vierGewinntFrame.buttons) {
@@ -79,5 +79,8 @@ public class FrameGame extends Game implements BordObserver {
             }
 
         }
+    }
+    public void update_load(ObservableBord bord) {
+        vierGewinntFrame.update(bord);
     }
 }

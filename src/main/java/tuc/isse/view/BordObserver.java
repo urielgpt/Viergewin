@@ -23,4 +23,6 @@ import java.io.IOException;
 
 public interface BordObserver {
     public void update(ObservableBord bord) throws ColumnFullException, IllegalMoveException, IOException;
+
+    public void update_load(ObservableBord observableBord);
 }

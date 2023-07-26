@@ -21,11 +21,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class VierGewinntFrame extends JFrame implements BordObserver, ActionListener {
-    private final ObservableBord bord;
+    public final ObservableBord bord;
     public JButton[] buttons = new JButton[7];
     public Drawcircle drawcircle ;
+    ArrayList<ActionListener> actionListeners = new ArrayList<>();
 
     public VierGewinntFrame(ObservableBord bord, Drawcircle drawcircle) {
         this.bord = bord;
@@ -37,6 +39,16 @@ public class VierGewinntFrame extends JFrame implements BordObserver, ActionList
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
+        JMenuBar menuBar = new JMenuBar();
+        this.setJMenuBar(menuBar);
+        JMenu save_load = new JMenu("save|load");
+        menuBar.add(save_load);
+        JMenuItem save = new JMenuItem("save");
+        JMenuItem load = new JMenuItem("load");
+        save_load.add(save);
+        save.addActionListener(new saveaction(this.bord));
+        save_load.add(load);
+        load.addActionListener(new loadaction(this.bord, this));
 
         for (int i = 0; i < buttons.length; i++) {
             buttons[i] = new JButton("   " + i + "   ");
@@ -57,11 +69,20 @@ public class VierGewinntFrame extends JFrame implements BordObserver, ActionList
         for (JButton button : buttons) {
             button.addActionListener(listener);
         }
+        actionListeners.add(listener);
     }
 
     public void entButtonListener(ActionListener listener) {
         for (JButton button : buttons) {
             button.removeActionListener(listener);
+        }
+    }
+
+    public void removealllistener(){
+        for (ActionListener listener : actionListeners) {
+            for (JButton button : buttons) {
+                button.removeActionListener(listener);
+            }
         }
     }
 
@@ -74,6 +95,11 @@ public class VierGewinntFrame extends JFrame implements BordObserver, ActionList
     public void update(ObservableBord bord) {
         this.add(new Drawcircle(bord));
         repaint();
+    }
+
+    @Override
+    public void update_load(ObservableBord observableBord) {
+
     }
 
 }

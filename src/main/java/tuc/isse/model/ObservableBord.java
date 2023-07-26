@@ -24,6 +24,7 @@ import java.util.List;
 
 public class ObservableBord extends Bord{
     private final List<BordObserver> bordObservers = new ArrayList<>();
+    public List<BordObserver> bordObservers_load = new ArrayList<>();
 
     public void addObserver(BordObserver bordObserver){
         this.bordObservers.add(bordObserver);
@@ -39,6 +40,11 @@ public class ObservableBord extends Bord{
     public void notifyObserver() throws ColumnFullException, IllegalMoveException, IOException {
         for (BordObserver bordObserver : bordObservers){
             bordObserver.update(this);
+        }
+    }
+    public void notifyObserver_load() throws ColumnFullException, IllegalMoveException, IOException {
+        for (BordObserver bordObserver : bordObservers){
+            bordObserver.update_load(this);
         }
     }
     @Override

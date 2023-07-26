@@ -16,14 +16,14 @@ package tuc.isse.model;
  * diese Klasse dient als Brett, auf dem das gesamte Spiel stattfinden wird
  */
 
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
 public class Bord extends GameObjekt {
-    Stack<Token> lager_red = new Stack<Token>();
-    Stack<Token> lager_yellow = new Stack<Token>();
+    public Stack<Token> lager_red = new Stack<Token>();
+    public Stack<Token> lager_yellow = new Stack<Token>();
     public Bord() {
         this.cells = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
@@ -39,7 +39,7 @@ public class Bord extends GameObjekt {
         }
     }
 
-    private final List<List<Cell>> cells;
+    private List<List<Cell>> cells;
 
     public Token getToken(Color color){
         if(color == Color.RED) {
@@ -74,6 +74,38 @@ public class Bord extends GameObjekt {
     }
 
     public void dropToken(Token token, int columnIndex) throws ColumnFullException, IllegalMoveException, IOException {
+        if (testVictory() != Winner.NONE) throw new IllegalMoveException("Das Spiel ist fertig");
+        if (columnIndex < 0 || columnIndex >= cells.get(0).size()) throw new IllegalArgumentException("Ungültiger Spaltenindex");
+        int i = 0;
+        while (i < cells.size()) {
+            if (canDrop(columnIndex)) {
+                if (cells.get(i).get(columnIndex).getToken() == null) {
+                    cells.get(i).get(columnIndex).setToken(token);
+                    System.out.println(toString());
+                    if (testVictory() != Winner.NONE){
+                        if(testVictory() == Winner.RED){
+                            System.out.println("And the winner is: X");
+                            break;
+                        }
+                        else if(testVictory() == Winner.YELLOW){
+                            System.out.println("And the winner is: O");
+                            break;
+                        }
+                        else{
+                            System.out.println("Niemand hat gewonnen : Das Spiel ist fertig");
+                            break;
+                        }
+                    }
+                    break;
+                } else {
+                    i++;
+                }
+            } else {
+                throw new ColumnFullException("Die Spalte ist voll");
+            }
+        }
+    }
+    public void dropToken_load(Token token, int columnIndex) throws ColumnFullException, IllegalMoveException, IOException {
         if (testVictory() != Winner.NONE) throw new IllegalMoveException("Das Spiel ist fertig");
         if (columnIndex < 0 || columnIndex >= cells.get(0).size()) throw new IllegalArgumentException("Ungültiger Spaltenindex");
         int i = 0;
@@ -253,7 +285,74 @@ public class Bord extends GameObjekt {
         }
         return Winner.NONE;
     }
+    public void save(String path) throws IOException {
+        File folder = new File("C:/Users/uriel/IdeaProjects/untitled/src/model/Savefolder/");
+        File file = new File("C:/Users/uriel/IdeaProjects/untitled/src/model/Savefolder/" + path + ".txt");
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        FileWriter writer = new FileWriter(file);
+        BufferedWriter bw = new BufferedWriter(writer);
+        for (List<Cell> cell : cells) {
+            for (int col = 0; col < cells.get(0).size(); col++) {
+                if (cell.get(col).getToken() != null) {
+                    if (cell.get(col).getToken().getColor() == Color.RED) {
+                        bw.write(col + "1");
+                        bw.newLine();
+                    } else {
+                        bw.write(col + "0");
+                        bw.newLine();
+                    }
+                } else {
+                    bw.write("9");
+                    bw.newLine();
+                }
+            }
+        }
+        bw.close();
+        writer.close();
+    }
+
+    public void load(String path) {
+        this.cells = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            List<Cell> row = new ArrayList<>();
+            for (int j = 0; j < 7; j++) {
+                row.add(new Cell());
+            }
+            this.cells.add(row);
+        }
+        for(int i = 0; i < 21; i++){
+            this.lager_red.push(new Token(Color.RED));
+            this.lager_yellow.push(new Token(Color.YELLOW));
+        }
+        File file = new File("C:/Users/uriel/IdeaProjects/untitled/src/model/Savefolder/" + path + ".txt");
+        if (file.exists()) {
+            try (FileReader filereader = new FileReader(file);
+                 BufferedReader reader = new BufferedReader(filereader)) {
+
+                String line = reader.readLine();
+                while (line != null) {
+                    int index = Character.getNumericValue(line.charAt(0));
+                    if (index != 9) {
+                        if (Character.getNumericValue(line.charAt(1)) == 1)
+                            this.dropToken_load(this.getToken(Color.RED), index);
+                        else
+                            this.dropToken_load(this.getToken(Color.YELLOW), index);
+                    }
+                    line = reader.readLine();
+                }
+            } catch (IOException | ColumnFullException | IllegalMoveException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 
     @Override
     public String toString() {
